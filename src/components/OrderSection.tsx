@@ -13,6 +13,7 @@ import {
   PRODUCTS,
   STORE_CONFIG,
 } from '../config/store';
+import { BotanicalDivider } from './BotanicalOrnament';
 import { SafeImage } from './SafeImage';
 
 interface OrderFormValues {
@@ -151,7 +152,7 @@ export function OrderSection() {
   };
 
   return (
-    <section id="order" className="py-16 sm:py-24 bg-[#F2ECE0]">
+    <section id="order" className="relative py-16 sm:py-24 bg-[#F2ECE0]">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <p className="text-xs sm:text-sm font-medium text-[#7A6234] mb-2">
@@ -163,31 +164,38 @@ export function OrderSection() {
           >
             احصل على مجموعة ORAVIA الكاملة
           </h2>
-          <p className="text-sm sm:text-base text-[#4C5C52]">
-            أدخل معلومات التوصيل أدناه لتجهيز طلبك وإرساله مباشرة عبر واتساب لتأكيد الشحن إلى مدينتك.
+          <BotanicalDivider variant="light" />
+          <p className="text-sm sm:text-base text-[#4C5C52] mt-3">
+            أدخل معلومات التوصيل أدناه لتوجيه طلبك مباشرة عبر واتساب وتأكيد الشحن إلى مدينتك.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Kit Summary & Pricing Card */}
-          <div className="lg:col-span-5 rounded-2xl bg-[#FAF6EE] border border-[#1B3B2B]/12 overflow-hidden">
-            <div className="aspect-[4/3] w-full bg-[#EFE7D8] overflow-hidden">
+          <div className="lg:col-span-5 rounded-2xl bg-[#FAF6EE] border border-[#B28C4A]/35 shadow-[0_24px_54px_-24px_rgba(22,38,29,0.2)] overflow-hidden">
+            <div className="relative aspect-[4/3] w-full bg-[#EFE7D8] overflow-hidden">
               <SafeImage
                 src={STORE_CONFIG.heroImage}
                 alt={STORE_CONFIG.heroImageAlt}
                 fallbackTitle="ORAVIA Box"
                 className="w-full h-full object-cover object-center"
               />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0F2218]/85 to-transparent px-5 py-3.5 flex items-center justify-between text-[#FAF6EE]">
+                <span className="text-xs text-[#DFC086]">علبة كاملة من 3 قطع</span>
+                <span className="font-editorial text-lg font-bold tabular-nums-ar">
+                  {unitPrice} {STORE_CONFIG.currencyLabel}
+                </span>
+              </div>
             </div>
 
             <div className="p-6 sm:p-7">
-              <div className="flex items-baseline justify-between gap-4 pb-5 border-b border-[#1B3B2B]/10">
+              <div className="flex items-baseline justify-between gap-4 pb-5 border-b border-[#B28C4A]/20">
                 <div>
                   <h3 className="text-lg sm:text-xl font-semibold text-[#16261D]">
                     {STORE_CONFIG.kitName}
                   </h3>
                   <p className="text-xs text-[#4C5C52] mt-1">
-                    السعر قابل للتعديل من إعدادات المتجر
+                    تغليف فاخر جاهز للاستخدام أو الإهداء
                   </p>
                 </div>
                 <div className="text-left shrink-0">
@@ -200,18 +208,28 @@ export function OrderSection() {
                 </div>
               </div>
 
-              <ul className="py-5 space-y-2.5 text-sm text-[#4C5C52] border-b border-[#1B3B2B]/10">
+              <ul className="py-5 space-y-3 text-sm text-[#4C5C52] border-b border-[#B28C4A]/20">
                 {PRODUCTS.map((product) => (
                   <li key={product.id} className="flex items-center justify-between gap-3">
-                    <span className="text-[#16261D] font-medium">{product.name}</span>
-                    <span className="text-xs text-[#7A6234]">{product.spec}</span>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg overflow-hidden border border-[#1B3B2B]/15 shrink-0">
+                        <SafeImage
+                          src={product.image}
+                          alt={product.alt}
+                          fallbackTitle={product.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="text-[#16261D] font-medium">{product.name}</span>
+                    </div>
+                    <span className="text-xs text-[#7A6234] shrink-0">{product.spec}</span>
                   </li>
                 ))}
               </ul>
 
               <div className="pt-5 flex items-center justify-between text-sm">
                 <span className="text-[#4C5C52]">الإجمالي ({form.quantity} × {unitPrice} {STORE_CONFIG.currencyLabel})</span>
-                <span className="text-lg font-bold text-[#16261D] tabular-nums-ar">
+                <span className="text-xl font-bold text-[#1B3B2B] tabular-nums-ar">
                   {totalMAD} {STORE_CONFIG.currencyLabel}
                 </span>
               </div>
@@ -224,7 +242,7 @@ export function OrderSection() {
           </div>
 
           {/* Order Form / Prepared WhatsApp Order Panel */}
-          <div className="lg:col-span-7 rounded-2xl bg-[#FDFBF7] border border-[#1B3B2B]/12 p-6 sm:p-8 lg:p-10">
+          <div className="lg:col-span-7 rounded-2xl bg-[#FDFBF7] border border-[#B28C4A]/35 shadow-[0_24px_54px_-24px_rgba(22,38,29,0.2)] p-6 sm:p-8 lg:p-10">
             {preparedOrder ? (
               <div className="space-y-6">
                 <div className="pb-5 border-b border-[#1B3B2B]/10">
@@ -485,7 +503,7 @@ export function OrderSection() {
                 {/* Primary Submit CTA */}
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2.5 bg-[#1B3B2B] text-[#FAF6EE] hover:bg-[#132B1F] px-6 py-4 text-base font-semibold rounded-xl shadow-[0_12px_28px_-12px_rgba(27,59,43,0.45)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#1B3B2B]"
+                  className="w-full flex items-center justify-center gap-2.5 bg-gradient-to-l from-[#1B3B2B] to-[#132B1F] text-[#FAF6EE] hover:from-[#132B1F] hover:to-[#0F2218] border border-[#C8A464]/35 px-6 py-4 text-base font-semibold rounded-xl shadow-[0_14px_30px_-12px_rgba(27,59,43,0.5)] transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#1B3B2B]"
                 >
                   <span>أطلب مجموعتك الآن</span>
                   <span aria-hidden="true">·</span>
