@@ -25,7 +25,9 @@ export function MobileStickyBar() {
     <div className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-[#FAF6EE]/95 backdrop-blur-md border-t border-[#1B3B2B]/15 px-4 py-2.5 shadow-[0_-8px_24px_-12px_rgba(15,34,24,0.2)]">
       <div className="flex items-center justify-between gap-4">
         <div className="leading-tight">
-          <span className="block text-[11px] text-[#4C5C52]">المجموعة الكاملة</span>
+          <span className="block text-[11px] text-[#7A6234] font-medium">
+            توصيل مجاني بالمغرب
+          </span>
           <span className="font-editorial text-lg font-bold text-[#16261D] tabular-nums-ar">
             {STORE_CONFIG.priceMAD} {STORE_CONFIG.currencyLabel}
           </span>

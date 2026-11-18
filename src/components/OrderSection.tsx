@@ -7,10 +7,11 @@ import {
   Plus,
   RotateCcw,
   ShieldCheck,
+  Truck,
 } from 'lucide-react';
 import {
   MOROCCAN_CITIES,
-  PRODUCTS,
+  PRODUCT_HIGHLIGHTS,
   STORE_CONFIG,
 } from '../config/store';
 import { BotanicalDivider } from './BotanicalOrnament';
@@ -107,14 +108,15 @@ export function OrderSection() {
     }
 
     const lines = [
-      `السلام عليكم، أود طلب ${STORE_CONFIG.kitName}:`,
+      `السلام عليكم، أود طلب ${STORE_CONFIG.productName} (${STORE_CONFIG.productSpec}):`,
       `---------------------------`,
       `الاسم الكامل: ${form.fullName.trim()}`,
       `رقم الهاتف: ${normalizeMoroccanPhone(form.phone)}`,
       `المدينة: ${resolvedCity}`,
       `عنوان التوصيل: ${form.address.trim()}`,
       `الكمية: ${form.quantity}`,
-      `السعر الإجمالي: ${totalMAD} ${STORE_CONFIG.currencyLabel} (${STORE_CONFIG.currencyCode})`,
+      `التوصيل: مجاني (جميع مدن المغرب)`,
+      `السعر الإجمالي: ${totalMAD} ${STORE_CONFIG.currencyLabel} (${STORE_CONFIG.currencyCode}) شامل التوصيل`,
       `طريقة الدفع: الدفع عند الاستلام`,
     ];
 
@@ -156,34 +158,34 @@ export function OrderSection() {
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <p className="text-xs sm:text-sm font-medium text-[#7A6234] mb-2">
-            الطلب السريع والدفع عند الاستلام
+            الطلب المباشر · توصيل مجاني بالمغرب
           </p>
           <h2
             style={{ textWrap: 'balance' }}
             className="font-editorial text-3xl sm:text-4xl font-bold text-[#16261D] mb-3"
           >
-            احصل على مجموعة ORAVIA الكاملة
+            اطلب بودرة المسواك ORAVIA الآن
           </h2>
           <BotanicalDivider variant="light" />
           <p className="text-sm sm:text-base text-[#4C5C52] mt-3">
-            أدخل معلومات التوصيل أدناه لتوجيه طلبك مباشرة عبر واتساب وتأكيد الشحن إلى مدينتك.
+            املأ الاستمارة أدناه ليتم توجيه طلبك مباشرة إلى واتساب وتأكيد التوصيل المجاني إلى مدينتك.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Kit Summary & Pricing Card */}
+          {/* Single-Product Offer & Summary Card */}
           <div className="lg:col-span-5 rounded-2xl bg-[#FAF6EE] border border-[#B28C4A]/35 shadow-[0_24px_54px_-24px_rgba(22,38,29,0.2)] overflow-hidden">
-            <div className="relative aspect-[4/3] w-full bg-[#EFE7D8] overflow-hidden">
+            <div className="relative aspect-[4/3.6] w-full bg-[#EFE7D8] overflow-hidden">
               <SafeImage
-                src={STORE_CONFIG.heroImage}
-                alt={STORE_CONFIG.heroImageAlt}
-                fallbackTitle="ORAVIA Box"
+                src={STORE_CONFIG.productImage}
+                alt={STORE_CONFIG.productImageAlt}
+                fallbackTitle="ORAVIA 50g"
                 className="w-full h-full object-cover object-center"
               />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0F2218]/85 to-transparent px-5 py-3.5 flex items-center justify-between text-[#FAF6EE]">
-                <span className="text-xs text-[#DFC086]">علبة كاملة من 3 قطع</span>
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0F2218]/90 to-transparent px-5 py-4 flex items-center justify-between text-[#FAF6EE]">
+                <span className="text-xs text-[#DFC086]">{STORE_CONFIG.productSpec}</span>
                 <span className="font-editorial text-lg font-bold tabular-nums-ar">
-                  {unitPrice} {STORE_CONFIG.currencyLabel}
+                  {unitPrice} {STORE_CONFIG.currencyLabel} · توصيل مجاني
                 </span>
               </div>
             </div>
@@ -192,10 +194,10 @@ export function OrderSection() {
               <div className="flex items-baseline justify-between gap-4 pb-5 border-b border-[#B28C4A]/20">
                 <div>
                   <h3 className="text-lg sm:text-xl font-semibold text-[#16261D]">
-                    {STORE_CONFIG.kitName}
+                    {STORE_CONFIG.productName}
                   </h3>
                   <p className="text-xs text-[#4C5C52] mt-1">
-                    تغليف فاخر جاهز للاستخدام أو الإهداء
+                    السعر شامل مصاريف التوصيل لجميع المدن
                   </p>
                 </div>
                 <div className="text-left shrink-0">
@@ -208,30 +210,31 @@ export function OrderSection() {
                 </div>
               </div>
 
-              <ul className="py-5 space-y-3 text-sm text-[#4C5C52] border-b border-[#B28C4A]/20">
-                {PRODUCTS.map((product) => (
-                  <li key={product.id} className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg overflow-hidden border border-[#1B3B2B]/15 shrink-0">
-                        <SafeImage
-                          src={product.image}
-                          alt={product.alt}
-                          fallbackTitle={product.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <span className="text-[#16261D] font-medium">{product.name}</span>
-                    </div>
-                    <span className="text-xs text-[#7A6234] shrink-0">{product.spec}</span>
+              <ul className="py-5 space-y-2.5 text-sm text-[#4C5C52] border-b border-[#B28C4A]/20">
+                {PRODUCT_HIGHLIGHTS.map((highlight) => (
+                  <li key={highlight} className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-[#1B3B2B] shrink-0" aria-hidden="true" />
+                    <span className="text-[#16261D]">{highlight}</span>
                   </li>
                 ))}
               </ul>
 
-              <div className="pt-5 flex items-center justify-between text-sm">
-                <span className="text-[#4C5C52]">الإجمالي ({form.quantity} × {unitPrice} {STORE_CONFIG.currencyLabel})</span>
-                <span className="text-xl font-bold text-[#1B3B2B] tabular-nums-ar">
-                  {totalMAD} {STORE_CONFIG.currencyLabel}
-                </span>
+              <div className="py-4 space-y-2 border-b border-[#B28C4A]/20 text-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-[#4C5C52]">مصاريف التوصيل</span>
+                  <span className="font-semibold text-[#1B3B2B] flex items-center gap-1.5">
+                    <Truck className="w-4 h-4 text-[#B28C4A]" aria-hidden="true" />
+                    <span>مجاني (0 درهم)</span>
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[#4C5C52]">
+                    الإجمالي ({form.quantity} × {unitPrice} {STORE_CONFIG.currencyLabel})
+                  </span>
+                  <span className="text-xl font-bold text-[#1B3B2B] tabular-nums-ar">
+                    {totalMAD} {STORE_CONFIG.currencyLabel}
+                  </span>
+                </div>
               </div>
 
               <div className="mt-4 flex items-center gap-2 text-xs text-[#4C5C52]">
@@ -259,6 +262,10 @@ export function OrderSection() {
 
                 <div className="rounded-xl bg-[#F2ECE0]/70 border border-[#1B3B2B]/10 p-5 space-y-2.5 text-sm">
                   <div className="flex justify-between gap-4">
+                    <span className="text-[#4C5C52]">المنتج</span>
+                    <span className="font-medium text-[#16261D]">{STORE_CONFIG.productName}</span>
+                  </div>
+                  <div className="flex justify-between gap-4">
                     <span className="text-[#4C5C52]">الاسم الكامل</span>
                     <span className="font-medium text-[#16261D]">{form.fullName}</span>
                   </div>
@@ -276,6 +283,10 @@ export function OrderSection() {
                     <span className="text-[#4C5C52]">العنوان</span>
                     <span className="font-medium text-[#16261D] text-left">{form.address}</span>
                   </div>
+                  <div className="flex justify-between gap-4">
+                    <span className="text-[#4C5C52]">التوصيل</span>
+                    <span className="font-medium text-[#1B3B2B]">مجاني (0 درهم)</span>
+                  </div>
                   <div className="flex justify-between gap-4 pt-2 border-t border-[#1B3B2B]/10">
                     <span className="font-semibold text-[#16261D]">المبلغ الإجمالي عند الاستلام</span>
                     <span className="font-bold text-[#1B3B2B] tabular-nums-ar">
@@ -283,12 +294,6 @@ export function OrderSection() {
                     </span>
                   </div>
                 </div>
-
-                {STORE_CONFIG.isWhatsappPlaceholder && (
-                  <p className="text-xs text-[#7A6234] bg-[#F2ECE0] rounded-lg px-4 py-3 border border-[#B28C4A]/30">
-                    تنبيه لإعداد المتجر: رقم الواتساب المضبوط حالياً هو رقم تجريبي (212600000000). يمكنك تعديله من ملف الإعدادات قبل النشر.
-                  </p>
-                )}
 
                 <div className="flex flex-col sm:flex-row gap-3">
                   <a
@@ -336,7 +341,7 @@ export function OrderSection() {
                     استمارة الطلب المباشر
                   </h3>
                   <p className="text-xs sm:text-sm text-[#4C5C52] mt-1">
-                    الدفع نقداً عند استلام الطرد في جميع المدن المغربية.
+                    توصيل مجاني لجميع مدن المغرب والدفع عند الاستلام.
                   </p>
                 </div>
 
@@ -505,10 +510,10 @@ export function OrderSection() {
                   type="submit"
                   className="w-full flex items-center justify-center gap-2.5 bg-gradient-to-l from-[#1B3B2B] to-[#132B1F] text-[#FAF6EE] hover:from-[#132B1F] hover:to-[#0F2218] border border-[#C8A464]/35 px-6 py-4 text-base font-semibold rounded-xl shadow-[0_14px_30px_-12px_rgba(27,59,43,0.5)] transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#1B3B2B]"
                 >
-                  <span>أطلب مجموعتك الآن</span>
+                  <span>اطلب الآن عبر واتساب</span>
                   <span aria-hidden="true">·</span>
                   <span className="tabular-nums-ar text-[#DFC086]">
-                    {totalMAD} {STORE_CONFIG.currencyLabel}
+                    {totalMAD} {STORE_CONFIG.currencyLabel} (شامل التوصيل)
                   </span>
                 </button>
               </form>
